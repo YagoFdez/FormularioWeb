@@ -94,25 +94,34 @@
             margin-top: 0.25rem;
         }
 
-        .suggestions {
-            position: absolute;
-            background: white;
-            border: 1px solid var(--border-color);
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
             border-radius: 0.5rem;
-            width: 100%;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 1000;
-            display: none;
-        }
-
-        .suggestion-item {
-            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
         }
 
-        .suggestion-item:hover {
-            background: #f1f5f9;
+        .submit-btn:hover {
+            background: #1e2224;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .color-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .features-grid {
@@ -134,62 +143,6 @@
 
         .feature-item:hover {
             background: #f8fafc;
-        }
-
-        .color-palette {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .color-input {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .ai-suggestion {
-            background: #f0f9ff;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
-            border: 1px solid #93c5fd;
-        }
-
-        .reference-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .reference-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .remove-reference {
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-
-        .submit-btn {
-            background: var(--primary-color);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        .submit-btn:hover {
-            background: #1e2224;
         }
 
         .mood-board {
@@ -225,6 +178,32 @@
             justify-content: space-between;
             font-size: 0.8rem;
             color: #64748b;
+        }
+
+        .ai-suggestion {
+            background: #f0f9ff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            border: 1px solid #93c5fd;
+        }
+
+        .reference-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .reference-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .remove-reference {
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1.25rem;
         }
 
         @media (max-width: 768px) {
@@ -297,124 +276,33 @@
 
             <!-- Diseño y Estilo -->
             <div class="section-divider"></div>
-            <div class="section-title">Diseño y Estilo Visual</div>
+            <div class="section-title">Estilo y Diseño Preferido</div>
 
             <div class="form-group">
-                <label>Estilo Visual (desliza según tus preferencias)</label>
-                
-                <div class="slider-container">
-                    <label>Minimalista vs Detallado</label>
-                    <input type="range" class="slider" name="style_minimalist" min="1" max="5" value="3">
-                    <div class="slider-labels">
-                        <span>Muy minimalista</span>
-                        <span>Muy detallado</span>
-                    </div>
-                </div>
-
-                <div class="slider-container">
-                    <label>Clásico vs Moderno</label>
-                    <input type="range" class="slider" name="style_modern" min="1" max="5" value="3">
-                    <div class="slider-labels">
-                        <span>Muy clásico</span>
-                        <span>Muy moderno</span>
-                    </div>
-                </div>
-
-                <div class="slider-container">
-                    <label>Profesional vs Casual</label>
-                    <input type="range" class="slider" name="style_professional" min="1" max="5" value="3">
-                    <div class="slider-labels">
-                        <span>Muy profesional</span>
-                        <span>Muy casual</span>
-                    </div>
-                </div>
+                <label for="style">¿Qué estilo te gustaría que tenga tu web?</label>
+                <select id="style" name="style">
+                    <option value="minimalista">Minimalista</option>
+                    <option value="moderno">Moderno</option>
+                    <option value="clasico">Clásico</option>
+                    <option value="elegante">Elegante</option>
+                    <option value="otro">Otro (Especificar)</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label>Paleta de Colores Preferida</label>
+                <label for="palette">Paleta de Colores Preferida</label>
                 <div class="color-palette">
                     <div class="color-input">
-                        <label>Principal</label>
-                        <input type="color" name="color_primary" value="#000000">
+                        <input type="color" name="color_palette[]" value="#ffffff">
+                        <span>Primario</span>
                     </div>
                     <div class="color-input">
-                        <label>Secundario</label>
-                        <input type="color" name="color_secondary" value="#ffffff">
-                    </div>
-                    <div class="color-input">
-                        <label>Acento</label>
-                        <input type="color" name="color_accent" value="#0984e3">
+                        <input type="color" name="color_palette[]" value="#000000">
+                        <span>Secundario</span>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>Referencias Web</label>
-                <div id="referencesList" class="reference-list">
-                    <div class="reference-item">
-                        <input type="url" name="references[]" placeholder="https://ejemplo.com">
-                        <div class="helper-text">¿Qué te gusta de esta web?</div>
-                        <textarea name="reference_notes[]" placeholder="Describe qué aspectos te gustan"></textarea>
-                    </div>
-                </div>
-                <button type="button" id="addReference" class="submit-btn" style="margin-top: 1rem; background: var(--accent-color);">Añadir otra referencia</button>
-            </div>
-
-            <div class="form-group">
-                <label>Mood Board</label>
-                <div class="mood-board">
-                    <div class="mood-image">+ Añadir imagen</div>
-                    <div class="mood-image">+ Añadir imagen</div>
-                    <div class="mood-image">+ Añadir imagen</div>
-                    <div class="mood-image">+ Añadir imagen</div>
-                </div>
-                <div class="helper-text">Añade imágenes que representen el estilo visual que buscas</div>
-            </div>
-
-            <!-- Funcionalidades -->
-            <div class="section-divider"></div>
-            <div class="section-title">Funcionalidades</div>
-
-            <div class="form-group">
-                <label>Funcionalidades Deseadas</label>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="responsive">
-                        <span>Diseño Responsive</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="contact_form">
-                        <span>Formulario de Contacto</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="newsletter">
-                        <span>Newsletter</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="blog">
-                        <span>Blog</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="social_media">
-                        <span>Redes Sociales</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="analytics">
-                        <span>Analytics</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="seo">
-                        <span>SEO Optimizado</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="chat">
-                        <span>Chat en Vivo</span>
-                    </div>
-                    <div class="feature-item">
-                        <input type="checkbox" name="features[]" value="multilanguage">
-                        <span>Multi-idioma</span>
-                    </div>
-<!-- Continuación del formulario -->
             <!-- Sugerencias y Referencias de Diseño -->
             <div class="section-divider"></div>
             <div class="section-title">Referencias y Sugerencias de Diseño</div>
@@ -439,14 +327,7 @@
                 </div>
             </div>
 
-            <!-- Sección de Feedback en Tiempo Real -->
-            <div class="form-group">
-                <label for="feedback">¿Tienes ideas adicionales o comentarios sobre el diseño?</label>
-                <textarea id="feedback" name="feedback" rows="3" placeholder="Déjanos saber si hay algo más que quieras agregar"></textarea>
-                <div class="helper-text">Tu feedback nos ayudará a hacer ajustes personalizados</div>
-            </div>
-
-            <!-- Mejoras en Funcionalidades -->
+            <!-- Funcionalidades Interactivas -->
             <div class="section-divider"></div>
             <div class="section-title">Funcionalidades Interactivas</div>
 
@@ -468,6 +349,7 @@
                 </div>
                 <div class="helper-text">Selecciona las características adicionales que consideres relevantes.</div>
             </div>
+
             <div class="form-group">
                 <label>Sugerencias de Funcionalidades Basadas en IA</label>
                 <div class="ai-suggestion">
