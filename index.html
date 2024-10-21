@@ -1,3 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario para Renovación de Web</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.17.9/tagify.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.17.9/tagify.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2d3436;
+            --border-color: #e0e0e0;
+            --focus-color: #0984e3;
+            --background-color: #f9fafb;
+            --container-width: 45rem;
+            --accent-color: #00b894;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-divider {
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+            padding-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--focus-color);
+            box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.1);
+        }
+
+        .helper-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+
+        .suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background: #f1f5f9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .feature-item:hover {
+            background: #f8fafc;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .color-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-suggestion {
+            background: #f0f9ff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            border: 1px solid #93c5fd;
+        }
+
+        .reference-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .reference-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .remove-reference {
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #1e2224;
+        }
+
+        .mood-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mood-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            border: 2px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .slider-container {
+            margin: 1rem 0;
+        }
+
+        .slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cuestionario para la Renovación de tu Web</h1>
+        <form id="webForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <!-- Información básica -->
+            <div class="section-title">Información Básica</div>
+            <div class="form-group">
+                <label for="name">Nombre de la Empresa</label>
+                <input type="text" id="name" name="company_name" required>
+                <div class="helper-text">El nombre exacto que deseas mostrar en tu web</div>
+            </div>
+
+            <div class="form-group">
+                <label for="sector">Sector de la Empresa</label>
+                <input type="text" id="sector" name="sector" required>
+                <div class="helper-text">Nos ayudará a sugerir un diseño apropiado para tu industria</div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Persona de Contacto</label>
+                <input type="text" id="contact" name="contact_person" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email de Contacto</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Objetivos y Público -->
+            <div class="section-divider"></div>
+            <div class="section-title">Objetivos y Público Objetivo</div>
+            
+            <div class="form-group">
+                <label for="objectives">Objetivos Principales</label>
+                <textarea id="objectives" name="objectives" rows="3"></textarea>
+                <div class="helper-text">¿Qué quieres conseguir con tu nueva web?</div>
+                <div id="objectivesSuggestions" class="suggestions"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Público Objetivo (puedes seleccionar varios)</label>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <input type="checkbox" name="target_audience[]" value="jovenes"> 
+                        <span>Jóvenes (18-25)</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="target_audience[]" value="adultos">
+                        <span>Adultos (26-45)</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="target_audience[]" value="senior">
+                        <span>Senior (46+)</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="target_audience[]" value="empresas">
+                        <span>Empresas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diseño y Estilo -->
+            <div class="section-divider"></div>
+            <div class="section-title">Diseño y Estilo Visual</div>
+
+            <div class="form-group">
+                <label>Estilo Visual (desliza según tus preferencias)</label>
+                
+                <div class="slider-container">
+                    <label>Minimalista vs Detallado</label>
+                    <input type="range" class="slider" name="style_minimalist" min="1" max="5" value="3">
+                    <div class="slider-labels">
+                        <span>Muy minimalista</span>
+                        <span>Muy detallado</span>
+                    </div>
+                </div>
+
+                <div class="slider-container">
+                    <label>Clásico vs Moderno</label>
+                    <input type="range" class="slider" name="style_modern" min="1" max="5" value="3">
+                    <div class="slider-labels">
+                        <span>Muy clásico</span>
+                        <span>Muy moderno</span>
+                    </div>
+                </div>
+
+                <div class="slider-container">
+                    <label>Profesional vs Casual</label>
+                    <input type="range" class="slider" name="style_professional" min="1" max="5" value="3">
+                    <div class="slider-labels">
+                        <span>Muy profesional</span>
+                        <span>Muy casual</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Paleta de Colores Preferida</label>
+                <div class="color-palette">
+                    <div class="color-input">
+                        <label>Principal</label>
+                        <input type="color" name="color_primary" value="#000000">
+                    </div>
+                    <div class="color-input">
+                        <label>Secundario</label>
+                        <input type="color" name="color_secondary" value="#ffffff">
+                    </div>
+                    <div class="color-input">
+                        <label>Acento</label>
+                        <input type="color" name="color_accent" value="#0984e3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Referencias Web</label>
+                <div id="referencesList" class="reference-list">
+                    <div class="reference-item">
+                        <input type="url" name="references[]" placeholder="https://ejemplo.com">
+                        <div class="helper-text">¿Qué te gusta de esta web?</div>
+                        <textarea name="reference_notes[]" placeholder="Describe qué aspectos te gustan"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="addReference" class="submit-btn" style="margin-top: 1rem; background: var(--accent-color);">Añadir otra referencia</button>
+            </div>
+
+            <div class="form-group">
+                <label>Mood Board</label>
+                <div class="mood-board">
+                    <div class="mood-image">+ Añadir imagen</div>
+                    <div class="mood-image">+ Añadir imagen</div>
+                    <div class="mood-image">+ Añadir imagen</div>
+                    <div class="mood-image">+ Añadir imagen</div>
+                </div>
+                <div class="helper-text">Añade imágenes que representen el estilo visual que buscas</div>
+            </div>
+
+            <!-- Funcionalidades -->
+            <div class="section-divider"></div>
+            <div class="section-title">Funcionalidades</div>
+
+            <div class="form-group">
+                <label>Funcionalidades Deseadas</label>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="responsive">
+                        <span>Diseño Responsive</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="contact_form">
+                        <span>Formulario de Contacto</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="newsletter">
+                        <span>Newsletter</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="blog">
+                        <span>Blog</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="social_media">
+                        <span>Redes Sociales</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="analytics">
+                        <span>Analytics</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="seo">
+                        <span>SEO Optimizado</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="chat">
+                        <span>Chat en Vivo</span>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" name="features[]" value="multilanguage">
+                        <span>Multi-idioma</span>
+                    </div>
 <!-- Continuación del formulario -->
             <!-- Sugerencias y Referencias de Diseño -->
             <div class="section-divider"></div>
@@ -52,10 +468,6 @@
                 </div>
                 <div class="helper-text">Selecciona las características adicionales que consideres relevantes.</div>
             </div>
-
-            <!-- Continuar agregando campos interactivos -->
-
-            <!-- Sugerencias de IA según funcionalidades -->
             <div class="form-group">
                 <label>Sugerencias de Funcionalidades Basadas en IA</label>
                 <div class="ai-suggestion">
